@@ -524,3 +524,58 @@ export default function DashboardLayout({
 - You can create multiple layouts in different folders to have different UI structures for different sections of your app.
 
 ---
+
+## Nested Layouts in Next.js
+
+**Nested layouts** allow you to have layouts inside layouts.  
+This is useful when different sections of your app need different UI structures while still reusing shared components like headers, footers, or sidebars.
+
+### How It Works
+
+- Place a `layout.tsx` inside a subfolder.
+- All routes inside that folder (and subfolders) will render as `children` of this layout.
+- Nested layouts can extend or override the UI of parent layouts.
+
+---
+
+### Example Folder Structure
+
+app/
+├─ layout.tsx → Root layout (global header/footer)
+├─ page.tsx → Home page
+└─ blog/
+├─ layout.tsx → Blog-specific layout
+├─ page.tsx → /blog
+└─ [slug]/page.tsx → /blog/:slug
+
+---
+
+### Blog Nested Layout Example
+
+```tsx
+export default function BlogLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div>Blog Header</div>
+      {children} {/* Nested routes inside /blog render here */}
+    </div>
+  );
+}
+```
+
+### How Rendering Works
+
+- `/blog` → Wrapped by RootLayout + BlogLayout
+- `/blog/my-first-post` → Also wrapped by RootLayout + BlogLayout
+
+Notes
+
+- `children` represents all nested routes in the folder.
+- Nested layouts allow you to compose UI components logically.
+- You can combine multiple nested layouts for different sections (dashboard, blog, homepage, etc.) without duplicating code.
+
+---
