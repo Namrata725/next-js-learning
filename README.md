@@ -299,3 +299,108 @@ export default async function LecturePage({ params }) {
 ## You can use the length or values inside `slug` to decide what to render.
 
 ---
+
+## Page Not Found (404) in Next.js
+
+### Global 404 Page
+
+To create a global **Not Found** page, add a file named:
+
+`app/not-found.jsx`
+
+Whatever you return inside this file will be shown when a route is not found.
+
+Example:
+
+```jsx
+export default function NotFound() {
+  return <h1>Page Not Found</h1>;
+}
+```
+
+**Conditional Not Found Page**
+
+You can manually trigger the 404 page from any component using the `notFound()` function.
+
+Example:
+
+```tsx
+import { notFound } from "next/navigation";
+
+export default function ReviewPage({ params }) {
+  const { reviewId } = params;
+
+  if (reviewId > "50") {
+    notFound(); // This will show the global 404 page
+  }
+
+  return <div>Review ID: {reviewId}</div>;
+}
+```
+
+How it works
+
+- If a condition is met, `notFound()` will immediately render the global `not-found.jsx` page.
+
+---
+## File Co-location in Next.js
+
+Next.js App Router uses **file-based routing**, so the router expects a very specific structure.
+
+A folder becomes a route only when it contains **page.tsx** (or `page.jsx`).
+
+### Wrong Structure (your issue)
+
+app/
+└─ charts/
+├─ page.tsx
+└─ linechart.tsx
+
+
+Inside `linechart.tsx`, you had:
+
+```jsx
+const page = () => {
+  return <div>page line chart</div>;
+};
+
+export default function linechart() {
+  return <div>line chart</div>;
+}
+```
+### Why It Failed
+
+- Next.js expects **only one default export per route**, and the route file must be named **page.tsx**.
+- When you export something else (not named `page.tsx`), the router gets confused.
+- `linechart.tsx` is **NOT** a route — it's just a normal component.
+- But because you had a function with the name `page`, it caused routing conflicts.
+
+#### Correct Structure
+
+If you want `/charts/linechart` as a route:
+
+app/
+ └─ charts/
+       ├─ page.tsx               → /charts
+       └─ linechart/
+             └─ page.tsx         → /charts/linechart
+
+#### Correct Component File (non-route component)
+
+app/
+ └─ charts/
+       ├─ page.tsx
+       └─ linechart.tsx
+
+Then `linechart.tsx` should contain only one component and no default export named `page:`
+
+```tsx
+
+export default function LineChart() {
+  return <div>line chart</div>;
+}
+```
+#### Why It Worked After Exporting `page.tsx`
+
+- Because Next.js’ router **only understands `page.tsx` as a route**.
+- Once you corrected your `page.tsx` file and exported properly, the routing system became valid again.
