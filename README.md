@@ -455,3 +455,32 @@ export default function Dashboard() {
 ```
 
 ---
+
+## Route Groups in Next.js
+
+Route groups help organize routes and project files logically **without affecting the URL structure**.
+
+### How It Works
+
+- Wrap related routes in a folder with parentheses `(groupName)`.
+- URLs remain flat, ignoring the group folder name.
+
+### Example
+
+app/
+└─ (auth)/
+├─ login/page.tsx → URL: /login
+└─ register/page.tsx → URL: /register
+
+### Notes
+
+- The `(auth)` folder is **only for organization**; it does not appear in the URL.
+- You can combine multiple route groups in your project to keep the structure clean.
+
+### Benefits
+
+- Keeps project folders tidy
+- Logical grouping of routes (auth, dashboard, homepage, etc.)
+- No impact on the URL structure
+
+---
