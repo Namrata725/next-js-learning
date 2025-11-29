@@ -484,3 +484,43 @@ app/
 - No impact on the URL structure
 
 ---
+
+## Layout in Next.js
+
+A **layout** is a UI component that wraps your routes and renders them as **children**.  
+Any code written in a layout will affect **all routes** rendered within that layout.
+
+---
+
+### How to Create a Layout
+
+1. Create a file named `layout.tsx` or `layout.js` inside the folder you want to wrap.
+2. The layout component receives a `children` prop, which represents the content of the nested routes.
+
+### Example
+
+```tsx
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex">
+      <aside className="w-64 bg-gray-900 text-white p-4">
+        {/* Sidebar content */}
+      </aside>
+      <main className="flex-1 p-6">
+        {children} {/* Nested routes will render here */}
+      </main>
+    </div>
+  );
+}
+```
+
+#### Notes
+
+- All pages inside the folder where layout.tsx exists will automatically use this layout.
+- You can create multiple layouts in different folders to have different UI structures for different sections of your app.
+
+---
