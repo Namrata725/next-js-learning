@@ -579,3 +579,53 @@ Notes
 - You can combine multiple nested layouts for different sections (dashboard, blog, homepage, etc.) without duplicating code.
 
 ---
+
+## Multiple Routes Using Route Groups in Next.js
+
+Route groups help you **organize your project** logically without affecting the URLs.  
+You can also apply **section-specific layouts** for parts of your application.
+
+---
+
+### How It Works
+
+- Wrap related routes in a folder with parentheses `(groupName)`.
+- The folder name does **not appear in the URL**, but you can use it to organize files and layouts.
+- You can add a layout inside the group to wrap only those routes.
+
+---
+
+### Example: Auth Layout
+
+Folder structure:
+
+app/
+└─ (auth)/
+├─ layout.tsx → Auth-specific layout
+├─ login/page.tsx → /login
+└─ register/page.tsx → /register
+
+### Code Example: `layout.tsx` inside `(auth)`
+
+```tsx
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h2>Login Header</h2>
+      {children} {/* Only pages inside (auth) will render here */}
+    </div>
+  );
+}
+```
+
+Notes
+
+- `/login `and `/register` will automatically use `AuthLayout`.
+- The `<div>` and `<h2>` will only appear inside the children of this group.
+- Helps maintain **clean project structure** while keeping URLs flat.
+
+---
