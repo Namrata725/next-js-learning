@@ -1,11 +1,17 @@
-"use client";
-import React from "react";
+import { Metadata } from "next";
 
-export default function ProductDetails({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = React.use(params);
-  return <div>Product ID: {id}</div>;
+type Props = { params: Promise<{ productId: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const productId = (await params).productId;
+  return {
+    title: `Product ${productId}`,
+    description: "Product Description",
+  };
+}
+
+export default async function ProductDetails({ params }: Props) {
+  const productId = (await params).productId;
+
+  return <div>product Details: {productId}</div>;
 }

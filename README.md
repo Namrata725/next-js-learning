@@ -629,3 +629,75 @@ Notes
 - Helps maintain **clean project structure** while keeping URLs flat.
 
 ---
+
+## Routing Metadata in Next.js
+
+Metadata plays a crucial role in **SEO**, **social media sharing**, and improving the overall **discoverability** of your web pages.  
+Next.js provides two ways to add metadata:
+
+- **Static Metadata**
+- **Dynamic Metadata**
+
+Metadata can be added in **page.tsx** or **layout.tsx**.
+
+---
+
+## 1. Static Metadata
+
+Static metadata is used when the title/description does not change.
+
+### Example
+
+```tsx
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Title",
+  description: "About Description",
+};
+
+export default function About() {
+  return <h2>About</h2>;
+}
+```
+
+#### How It Works
+
+- If a page defines its own metadata, that metadata is used.
+- If a page does not define metadata, it inherits metadata from the nearest layout.tsx.
+
+## 2. Dynamic Metadata
+
+Dynamic metadata is used when metadata needs to be generated at runtime
+—for example, generating a product title based on product ID.
+
+example
+
+```tsx
+import { Metadata } from "next";
+
+type Props = { params: Promise<{ productId: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const productId = (await params).productId;
+
+  return {
+    title: `Product ${productId}`,
+    description: "Product Description",
+  };
+}
+
+export default async function ProductDetails({ params }: Props) {
+  const productId = (await params).productId;
+
+  return <div>Product Details: {productId}</div>;
+}
+```
+
+#### How It Works
+
+- `generateMetadata()` runs on the server.
+- It receives the dynamic route parameters.
+- Returns metadata based on the current route.
+
+---
