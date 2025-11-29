@@ -6,8 +6,8 @@ export const metadata: Metadata = {
     absolute: "contact next.js",
   },
 };
-const page = () => {
-  return <div>contact</div>;
+const Contact = () => {
+  return <div>hello contact page</div>;
 };
 
-export default page;
+export default Contact;

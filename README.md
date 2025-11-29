@@ -750,3 +750,26 @@ output: Blog | next js
 - Rarely needed unless you want a completely separate title format.
 
 ---
+
+## Linking Components & Navigation in Next.js
+
+Next.js provides the `Link` component for client-side navigation.
+It prevents full page reloads and makes routing faster.
+
+### Example 1: Linking to Dynamic Product Pages
+
+```tsx
+<ul>
+  <li>
+    <Link href="products/1">product-1</Link>
+  </li>
+  <li>
+    <Link href="products/2">product-2</Link>
+  </li>
+  <li>
+    <Link href="products/3">product-3</Link>
+  </li>
+</ul>
+```
+
+---

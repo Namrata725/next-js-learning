@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import About from "./(home)/about/page";
+import Contact from "./(home)/contact/page";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -25,7 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div>header</div>
+        <div>
+          <Link href="/about">about</Link>
+          <Link href="/contact">contact</Link>
+        </div>
         {children}
       </body>
     </html>
