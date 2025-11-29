@@ -225,3 +225,77 @@ app/
 │ └─ page.tsx → `/product/:id/reviews/:reviewId`
 
 ---
+
+## Catch-All Segments in Next.js
+
+Sometimes you have many nested routes (like lecture → subject → sub-lecture → deeper levels), and it’s not practical to create folders for every level.
+
+Example scenario:
+
+- `/lecture/math`
+- `/lecture/math/lecture-1`
+- `/lecture/math/lecture-1/sub-lecture-1`
+- `/lecture/physics/lecture-3/sub-2`
+- etc.
+
+To handle unlimited nested routes, Next.js provides **catch-all segments**.
+
+---
+
+## Creating a Catch-All Route
+
+Use a folder with:
+
+```tsx
+[...slug];
+```
+
+### Folder Structure
+
+app/
+└─ lecture/
+└─ [...slug]/
+└─ page.tsx
+
+This will match routes like:
+
+- `/lecture/math`
+- `/lecture/math/lecture-1`
+- `/lecture/physics/lecture-3/sub-lecture-2`
+- `/lecture/chemistry/abc/xyz/123`
+
+---
+
+## Example Code
+
+```tsx
+export default async function LecturePage({ params }) {
+  const { slug } = await params;
+
+  if (slug.length === 2) {
+    return "hello";
+  }
+
+  if (slug.length === 3) {
+    return "hi";
+  }
+
+  console.log(slug);
+
+  return <div>lectures</div>;
+}
+```
+
+## Explanation
+
+- `slug` becomes an array of segments.
+
+- URL: `/lecture/math/lecture-1`
+  → `slug = ["math", "lecture-1"]`
+
+- URL:` /lecture/math/lecture-1/sub-1`
+  →` slug = ["math", "lecture-1", "sub-1"]`
+
+## You can use the length or values inside `slug` to decide what to render.
+
+---
