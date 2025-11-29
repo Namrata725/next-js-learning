@@ -343,6 +343,7 @@ How it works
 - If a condition is met, `notFound()` will immediately render the global `not-found.jsx` page.
 
 ---
+
 ## File Co-location in Next.js
 
 Next.js App Router uses **file-based routing**, so the router expects a very specific structure.
@@ -356,7 +357,6 @@ app/
 ├─ page.tsx
 └─ linechart.tsx
 
-
 Inside `linechart.tsx`, you had:
 
 ```jsx
@@ -368,6 +368,7 @@ export default function linechart() {
   return <div>line chart</div>;
 }
 ```
+
 ### Why It Failed
 
 - Next.js expects **only one default export per route**, and the route file must be named **page.tsx**.
@@ -380,27 +381,77 @@ export default function linechart() {
 If you want `/charts/linechart` as a route:
 
 app/
- └─ charts/
-       ├─ page.tsx               → /charts
-       └─ linechart/
-             └─ page.tsx         → /charts/linechart
+└─ charts/
+├─ page.tsx → /charts
+└─ linechart/
+└─ page.tsx → /charts/linechart
 
 #### Correct Component File (non-route component)
 
 app/
- └─ charts/
-       ├─ page.tsx
-       └─ linechart.tsx
+└─ charts/
+├─ page.tsx
+└─ linechart.tsx
 
 Then `linechart.tsx` should contain only one component and no default export named `page:`
 
 ```tsx
-
 export default function LineChart() {
   return <div>line chart</div>;
 }
 ```
+
 #### Why It Worked After Exporting `page.tsx`
 
 - Because Next.js’ router **only understands `page.tsx` as a route**.
 - Once you corrected your `page.tsx` file and exported properly, the routing system became valid again.
+
+---
+
+## Private Folders
+
+A **private folder** in Next.js is a folder that is completely excluded from routing.
+
+### Key Points
+
+- Any folder starting with an underscore (`_`) is **excluded from routing**.
+- Example: `_helloWorld`, `_sidebar`
+- You can also use the encoded form: `%5FhelloWorld`
+- Even if the folder contains a `page.tsx` with a default export, it **will NOT** create a route.
+
+---
+
+## Example
+
+You have a route:
+
+**app/dashboard/page.tsx → /dashboard**
+
+Now inside `dashboard`, create a private folder:
+
+**app/dashboard/\_sidebar**
+
+Inside `_sidebar`, place reusable UI components:
+
+**Sidebar.tsx**
+**Navbar.tsx**
+**ContentBox.tsx**
+
+These files **are not routes**, but you can import them normally:
+
+```tsx
+import Sidebar from "./_sidebar/Sidebar";
+import Navbar from "./_sidebar/Navbar";
+
+export default function Dashboard() {
+  return (
+    <div>
+      <Navbar />
+      <Sidebar />
+      <h1>Dashboard</h1>
+    </div>
+  );
+}
+```
+
+---
