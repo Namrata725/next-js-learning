@@ -101,4 +101,127 @@ Below is an overview of the main files and folders in a Next.js project:
 
 ---
 
+## Routing: React Server Components
 
+React introduced a new architecture called **React Server Components (RSC)**, and Next.js quickly adopted it.  
+This architecture provides a fresh way of building React apps by dividing components into two types:
+
+---
+
+### 1. Server Components (Default in Next.js)
+
+- In Next.js, **all components are server components by default**.
+- These components run on the server and can perform server-side tasks such as:
+  - Reading files
+  - Fetching data directly from a database
+- **Limitations:**
+  - Cannot use React hooks (`useState`, `useEffect`, etc.)
+  - Cannot handle user interactions (click, submit)
+
+---
+
+### 2. Client Components
+
+To create a client component, add the following at the top of the file:
+
+```tsx
+"use client";
+```
+
+**Client components:**
+Run on the user's browser
+
+- Can use React hooks
+- Can handle UI interactions (clicks, forms, inputs)
+- Cannot perform server-side tasks like reading files or direct database access
+- Client components are the same as components in traditional React.js.
+
+---
+
+## How Routing Works in Next.js
+
+Next.js uses a **file-system based routing system**, meaning the structure of your files determines the routes of your application.
+
+### Routing Conventions
+
+- All routes must live inside the **app/** folder.
+- Each route must contain a file named **page.js** or **page.tsx**.
+- When you follow this convention, the file automatically becomes a route.
+
+### Example
+
+app/
+├─ page.tsx → `/`
+├─ about/
+│ └─ page.tsx → `/about`
+└─ contact/
+└─ page.tsx → `/contact`
+
+![alt text](image.png)
+
+---
+
+## Nested Routes in Next.js
+
+Next.js makes it easy to create nested routes using folders.  
+A **folder represents a route**, and placing a `page.tsx` inside it defines the page for that route.
+
+### Example of Nested Routes
+
+app/
+├─ blog/
+│ ├─ page.tsx → `/blog`
+│ ├─ first-blog/
+│ │ └─ page.tsx → /blog/first-blog
+│ └─ second-blog/
+│ ├─ page.tsx → /blog/second-blog
+
+---
+
+## Dynamic Route Example
+
+### Folder Structure
+
+app/
+├─ products/
+│ ├─ page.tsx → `/products`
+│ └─ [productId]/
+│ └─ page.tsx → `/products/:productId`
+
+### Example Code (Client Component)
+
+```tsx
+"use client";
+import React from "react";
+
+export default function ProductDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = React.use(params);
+  return <div>Product ID: {id}</div>;
+}
+```
+
+- The folder `[productId]` creates a dynamic route.
+- `useParams()` is the correct way to access dynamic route parameters in the App Router.
+- Your previous code using `params: Promise` and `React.use` is not valid.
+
+---
+
+## Nested Dynamic Routes in Next.js
+
+You can combine folders and dynamic segments to create nested dynamic routes.
+
+### Folder Structure
+
+app/
+├─ product/
+│ └─ [id]/
+│ ├─ page.tsx → `/product/:id`
+│ └─ reviews/
+│ └─ [reviewId]/
+│ └─ page.tsx → `/product/:id/reviews/:reviewId`
+
+---
