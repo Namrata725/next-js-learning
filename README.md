@@ -701,3 +701,52 @@ export default async function ProductDetails({ params }: Props) {
 - Returns metadata based on the current route.
 
 ---
+
+## Title Metadata in Next.js
+
+Next.js allows advanced control over page titles using the `title` object inside metadata.  
+This helps you create **dynamic**, **consistent**, and **SEO-friendly** titles across your application.
+
+---
+
+### Example: Title Metadata Structure
+
+```tsx
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    default: "welcome to Next.js",
+    template: "%s | next js",
+    absolute: "",
+  },
+
+  description: "hello",
+};
+```
+
+**Explanation**
+
+#### `1. default`
+
+- This title will be used when no page defines its own title.
+  Example output:
+  welcome to Next.js
+
+#### `2. template`
+
+- Used to append a consistent format for page titles.
+  Example:
+
+```tsx
+export const metadata = { title: "Blog" };
+```
+
+output: Blog | next js
+
+#### `3. absolute`
+
+- If `absolute` is used, the template is skipped and the title becomes exactly what you set.
+- Rarely needed unless you want a completely separate title format.
+
+---
