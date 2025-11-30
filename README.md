@@ -773,3 +773,77 @@ It prevents full page reloads and makes routing faster.
 ```
 
 ---
+
+# Active Links in Next.js Navigation
+
+Next.js allows you to highlight the **active navigation link** using the `usePathname` hook from `next/navigation`.
+
+This helps users know which page they are currently on.
+
+---
+
+## Example: Root Layout with Active Links
+
+```tsx
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const navigation = [
+  { title: "about", href: "/about" },
+  { title: "contact", href: "/contact" },
+  { title: "blog", href: "/blog" },
+  { title: "product", href: "/products" },
+];
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+
+  return (
+    <html lang="en">
+      <body>
+        <div>
+          {navigation.map((nav) => {
+            const isActive =
+              pathname === nav.href ||
+              (pathname.startsWith(nav.href) && nav.href !== "/");
+
+            return (
+              <Link
+                key={nav.href}
+                href={nav.href}
+                className={isActive ? "text-blue-500" : ""}
+              >
+                {nav.title}
+              </Link>
+            );
+          })}
+        </div>
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+### How It Works
+
+**1. usePathname()**
+Returns the current path of the page.
+
+**2. Check Active Link**
+
+```jsx
+const isActive =
+  pathname === nav.href || (pathname.startsWith(nav.href) && nav.href !== "/");
+```
+
+**3. Conditional Class**
+Add a class (e.g., text-blue-500) if the link is active, so it appears highlighted.
+
+---
