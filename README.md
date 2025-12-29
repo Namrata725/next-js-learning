@@ -1,36 +1,187 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Learning Notes (Beginner Friendly)
 
-## Getting Started
+This repository contains my personal notes while learning **Next.js from scratch**.
+The goal is to keep everything **simple, structured, and easy to revisit** later.
 
-First, run the development server:
+---
+
+## System Requirements
+
+- **Node.js**: `v20.9`
+- **Operating Systems**:
+  - macOS
+  - Windows (including WSL)
+  - Linux
+- **Supported Browsers**:
+  - Chrome `111+`
+  - Edge `111+`
+  - Firefox `111+`
+  - Safari `16.4+`
+
+---
+
+## Next.js Project Initialization
 
 ```bash
+npx create-next-app@latest my-app --yes
+cd my-app
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the browser at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Next.js Routers
 
-To learn more about Next.js, take a look at the following resources:
+Next.js provides **two routing systems**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Pages Router
+2. App Router (Recommended)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## App Router (Recommended)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The **App Router** is the modern and recommended way to build Next.js apps.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Why App Router?
+
+- Supports Server Components
+- Supports Client Components
+- Enables Partial Pre-rendering
+- Keeps your app up to date with Next.js features
+
+### File-Based Routing
+
+Every folder inside the `app/` directory becomes a **route**.
+
+Each route must contain a `page.tsx` file.
+
+Examples:
+
+```
+app/page.tsx          → http://localhost:3000
+app/about/page.tsx    → http://localhost:3000/about
+```
+
+If `page.tsx` is missing → Page Not Found error.
+
+---
+
+## `layout.tsx`
+
+`layout.tsx` wraps the **entire application**.
+
+- Contains `<html>` and `<body>`
+- Wraps all routes
+- Best place for navbar, footer, fonts, and SEO
+
+---
+
+## Navigation with `Link`
+
+Use `<Link />` instead of `<a>` for smooth navigation.
+
+```tsx
+import Link from "next/link";
+
+<Link href="/blogs/1">Go to Blog</Link>;
+```
+
+---
+
+## 🔍 SEO (Metadata)
+
+```ts
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Learning Next.js",
+  description: "A simple project to learn Next.js with README notes",
+};
+```
+
+---
+
+## Fonts
+
+```ts
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-poppins",
+});
+```
+
+---
+
+## `global.css`
+
+- Tailwind setup
+- Theme colors
+- Global styles
+
+---
+
+## `public/` Folder
+
+Store public assets:
+
+- Images
+- Icons
+- Files
+
+---
+
+## Server Components
+
+- Default in Next.js
+- Run on server
+- Secure (API keys safe)
+- No browser APIs
+
+---
+
+## Client Components
+
+- Add `'use client'`
+- Used for interaction
+- Can use hooks and browser APIs
+
+---
+
+## Data Fetching
+
+- Static (SSG)
+- Dynamic
+- ISR (`revalidate`)
+- SSR (`no-store`)
+
+---
+
+## Dynamic Routes
+
+Folder-based routing:
+
+```
+app/product/[id]/page.tsx
+```
+
+```tsx
+const page = ({ params }: { params: { id: string } }) => {
+  return <div>Product ID: {params.id}</div>;
+};
+
+export default page;
+```
+
+---
+
+Happy Learning 🚀
