@@ -275,3 +275,75 @@ Server Actions are used for **mutating data** in Next.js, similar to how **Serve
 > Essentially: Fetch data with Server Components, mutate data with Server Actions — all safely and efficiently on the server.
 
 ---
+
+## Using [shadcn/ui](https://ui.shadcn.com/)
+
+In this project, we are going to use **shadcn/ui**, a modern and customizable UI component library for Next.js.
+
+### Installation
+
+You can follow the official guide here: [shadcn/ui Next.js Installation](https://ui.shadcn.com/docs/installation/next)
+
+```bash
+npx shadcn@latest init
+
+```
+
+This will set up the library in your Next.js project.
+
+### After Installation
+
+Once shadcn/ui is installed, there are a few important files and utilities you’ll notice:
+
+1. **`utils.tsx`** (inside the `lib/` folder)
+
+   - Contains **`twmerge`**, a utility to easily merge multiple Tailwind CSS class names.
+   - Useful when you want to combine conditional classes or multiple variants for components.
+
+2. **`components.json`**
+
+   - Acts like a **mapper** that shadcn/ui uses internally.
+   - Tracks:
+     - Component schemas
+     - CSS paths
+     - Aliases and configuration for your setup
+
+3. **Icons (Lucid React)**
+   - shadcn/ui uses **Lucid React** for icons.
+   - Provides a modern, consistent icon library that integrates directly with the components.
+
+**Creating Your First Component**
+
+```bash
+npx shadcn@latest add button
+
+```
+
+- This will create a **Button component** at:
+
+```bash
+components/ui/button.tsx
+```
+
+- The generated button comes with **variants**:
+  - size (small, default, large)
+  - variant (default, outline, ghost, etc.)
+- You can **customize it globally** so all buttons in your app follow the same style.
+
+**example**
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+export default function Home() {
+  return (
+    <div>
+      <Button variant="outline" size="large">
+        Click Me
+      </Button>
+    </div>
+  );
+}
+```
+
+- You can **add more variants** or tweak the design in button.tsx and it will reflect everywhere.
