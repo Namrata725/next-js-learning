@@ -95,7 +95,7 @@ import Link from "next/link";
 
 ---
 
-## 🔍 SEO (Metadata)
+## SEO (Metadata)
 
 ```ts
 import { Metadata } from "next";
@@ -184,4 +184,94 @@ export default page;
 
 ---
 
-Happy Learning 🚀
+---
+
+## Cache Components & Partial Pre-rendering
+
+Next.js introduces **Cache Components** and **Partial Pre-rendering (PPR)** to improve performance by caching UI and streaming dynamic content only when it’s ready.
+
+> These features are **experimental** and may require enabling flags in `next.config.js`.
+
+---
+
+## Cache Components
+
+**Cache Components** allow you to cache parts of your UI at different levels so they don’t re-render unnecessarily.
+
+### Enable Cache Components
+
+In `next.config.js`:
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    cacheComponents: true,
+  },
+};
+
+module.exports = nextConfig;
+```
+
+**Using `'use cache'`**
+
+The `'use cache'` directive tells Next.js to cache the output of a page, function, or component.
+
+Depending on **where you place it**, different parts of the UI will be cached.
+
+**1. Page-level Cache**
+
+Caches the **entire page.**
+
+```tsx
+// app/page.tsx
+"use cache";
+
+export default function Page() {
+  return <div>Home Page</div>;
+}
+```
+
+**2. Function-level Cache**
+
+Caches the **entire function output.**
+
+```tsx
+export default function ProductPage() {
+  "use cache";
+
+  return <div>Product Page</div>;
+}
+```
+
+**3. Component-level Cache**
+
+Caches only a **specific component.**
+
+```tsx
+export function Price() {
+  "use cache";
+
+  return <div>$99</div>;
+}
+```
+
+## Server Actions
+
+Server Actions are used for **mutating data** in Next.js, similar to how **Server Components** are used for fetching data.
+
+### Why use Server Actions?
+
+- When fetching data, Server Components can get it **directly from the server**, reducing unnecessary network requests.
+- When mutating data (like creating, updating, or deleting), **Server Actions** allow you to do it safely **on the server**.
+- This approach is **faster and more secure**, because you don't need to send data back and forth between the client and server unnecessarily.
+
+### How it works
+
+1. Use **Server Components** to fetch and render data on the server.
+2. Use **Server Actions** to handle mutations (like form submissions or updates).
+3. This keeps your components simple and secure while minimizing network requests.
+
+> Essentially: Fetch data with Server Components, mutate data with Server Actions — all safely and efficiently on the server.
+
+---
