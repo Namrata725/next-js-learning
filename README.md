@@ -347,3 +347,124 @@ export default function Home() {
 ```
 
 - You can **add more variants** or tweak the design in button.tsx and it will reflect everywhere.
+
+## Learn by Doing: Building the Hero Section
+
+This project follows a **learn by doing** approach, where concepts are applied immediately by building real features.
+
+The first feature built is a **Landing Page Hero Section**.  
+It combines routing, components, UI libraries, and styling into one practical example.
+
+---
+
+## File: `app/page.tsx`
+
+### What we do inside this file
+
+- Acts as the **root route (`/`)**
+- Keeps the page minimal
+- Imports and renders the Hero section component
+
+### Key snippet
+
+```tsx
+import HeroSection from "@/components/ui/landing-page/hero-section";
+
+export default function Home() {
+  return <HeroSection />;
+}
+```
+
+**Concepts used**
+
+- App Router
+- Page composition
+- Clean separation of concerns
+
+#### File: `components/ui/landing-page/hero-section.tsx`
+**What we do inside this file**
+
+ - Build the main Hero UI
+ - Use shadcn/ui components (Button, Badge)
+ - Use next/link for navigation
+ - Split small UI parts into reusable components
+ - Render stats dynamically using data
+
+#### Key snippets
+
+**Data-driven UI**
+
+```tsx
+const statsData = [
+  { icon: RocketIcon, value: "10K+", label: "Projects Shared" },
+  { icon: UsersIcon, value: "2.5K+", label: "Active Creators", hasBorder: true },
+  { icon: EyeIcon, value: "25K+", label: "Monthly Visitors" },
+];
+```
+
+**Rendering using `.map()`**
+
+```tsx
+
+{statsData.map((stat) => (
+  <StatsCard key={stat.label} {...stat} />
+))}
+```
+
+#### Navigation with Link
+
+```tsx
+<Button asChild size="lg">
+  <Link href="/submit">Share Your Project</Link>
+</Button>
+
+```
+
+**Concepts used**
+ - Component-based architecture
+ - Data mapping
+ - Client-side navigation
+ - UI composition
+
+### File: `components/ui/landing-page/stats-card.tsx`
+
+**What we do inside this file**
+ - Create a reusable Stats card component
+ - Accept icons as props
+ - Use optional props for styling
+ - Keep styling logic isolated
+
+#### Key snippet
+
+```tsx
+
+export default function StatsCard({
+  icon: Icon,
+  value,
+  label,
+  hasBorder,
+}: {
+  icon: LucideIcon;
+  value: string;
+  label: string;
+  hasBorder?: boolean;
+}) {
+  ...
+}
+
+```
+**Concepts used**
+ - Passing components as props
+ - Optional props
+ - TypeScript for safer components
+ - Reusable UI patterns
+
+### What This Section Teaches
+
+ - How page.tsx connects to UI components
+ - How to structure files in App Router
+ - How to think in components instead of pages
+ - How to render UI using data
+ - How to keep code readable and scalable
+
+ ---
