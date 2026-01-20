@@ -20,8 +20,8 @@ export default function RootLayout({
       <body className={`${outfit.className} antialiased`}>
         <header>I BUILD THIS</header>
         {children}
+        <footer>© 2024 LEARNING next js. All rights reserved.</footer>
       </body>
-      <footer>© 2024 LEARNING next js. All rights reserved.</footer>
     </html>
   );
 }

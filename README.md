@@ -382,7 +382,7 @@ export default function Home() {
 - Clean separation of concerns
 
 #### File: `components/ui/landing-page/hero-section.tsx`
-**What we do inside this file**
+## What we do inside this file
 
  - Build the main Hero UI
  - Use shadcn/ui components (Button, Badge)
@@ -428,7 +428,7 @@ const statsData = [
 
 ### File: `components/ui/landing-page/stats-card.tsx`
 
-**What we do inside this file**
+## What we do inside this file
  - Create a reusable Stats card component
  - Accept icons as props
  - Use optional props for styling
@@ -467,4 +467,164 @@ export default function StatsCard({
  - How to render UI using data
  - How to keep code readable and scalable
 
+ ---
+
+ ## Learn by Doing: Featured & Recently Launched Products
+
+After building the Hero section, the next step was to display real content on the landing page.
+
+For this, two sections were added:
+- **Featured Products**
+- **Recently Launched Products**
+
+This helped practice component composition, data-driven UI, and reusable components.
+
+---
+
+## File: `app/page.tsx`
+
+### What we do inside this file
+
+- Acts as the root route (`/`)
+- Composes multiple landing page sections
+- Keeps logic out of the page and inside components
+
+### Key snippet
+
+```tsx
+<HeroSection />
+<FeatureadProducts />
+<RecentlyLunchedProducts />
+
+```
+**Concepts used**
+ - Page composition
+ - Reusing multiple sections
+ - Clean page structure
+
+ ---
+## file: `components/landing-page/featured-products.tsx`
+
+### What we do inside this file
+ - Display a list of featured products
+ - Use a reusable section header
+ - Render products using shared ProductCard
+ - Add navigation to explore more products
+
+### Key snippets
+
+**Static data for UI testing**
+
+```tsx
+const featuredProducts = [
+  { id: 1, name: "Product 1", isFeatured: true },
+];
+
+```
+
+**Rendering products**
+
+```tsx
+{featuredProducts.map((product) => (
+  <ProductCard key={product.id} product={product} />
+))}
+```
+
+**Navigation using Link**
+
+```tsx
+<Button asChild variant="outline">
+  <Link href="/explore">View All</Link>
+</Button>
+```
+
+**Concepts used**
+ - Data-driven UI
+ - Reusable components
+ - Client-side navigation
+ - Conditional rendering via props
+
+ ## file: `components/products/product-card.tsx`
+
+ ## What we do inside this file
+- Create a reusable product card
+ - Navigate to dynamic product pages
+ - Display tags, votes, and featured status
+ - Prepare UI for future interactions (voting)
+
+ ### Key snippets
+
+ **Dynamic routing**
+
+ ```tsx
+ <Link href={`/products/${product.id}`}>
+```
+
+**Conditional UI**
+
+```tsx
+{product.isFeatured && <Badge>Featured</Badge>}
+
+```
+
+**Mapping tags**
+
+```tsx
+{product.tags.map((tag) => (
+  <Badge key={tag}>{tag}</Badge>
+))}
+```
+
+**Concepts used**
+ - Reusable components
+ - Props and TypeScript interfaces
+ - Conditional rendering
+ - Dynamic routes
+
+## File: `components/common/section-header.tsx`
+
+## What we do inside this file
+ - Create a reusable section header
+ - Accept icons as props
+ - Keep section titles consistent across pages
+
+ ## Key snippet
+
+```tsx
+
+<SectionHeader
+  title="Featured Today"
+  icon={StarIcon}
+  description="Top picks from our community"
+/>
+```
+**Concepts used**
+ - Passing components as props
+ - UI consistency
+ - Reusable layout components
+ 
+## File: `components/common/empty-state.tsx`
+## What we do inside this file
+  - Display a fallback UI when no data is available
+  - Improve user experience for empty lists
+
+## Key snippet
+
+```tsx
+{products.length === 0 && <EmptyState />}
+
+```
+
+**Concepts used**
+
+ - Conditional rendering
+ - UX-focused components
+
+## What This Section Teaches
+ - How to compose multiple sections on one page 
+ - How to reuse components across different features
+ - How to render lists using .map()
+ - How to handle empty states properly
+ - How to prepare UI for future backend integration
+ 
  ---
