@@ -296,12 +296,10 @@ This will set up the library in your Next.js project.
 Once shadcn/ui is installed, there are a few important files and utilities you’ll notice:
 
 1. **`utils.tsx`** (inside the `lib/` folder)
-
    - Contains **`twmerge`**, a utility to easily merge multiple Tailwind CSS class names.
    - Useful when you want to combine conditional classes or multiple variants for components.
 
 2. **`components.json`**
-
    - Acts like a **mapper** that shadcn/ui uses internally.
    - Tracks:
      - Component schemas
@@ -382,13 +380,14 @@ export default function Home() {
 - Clean separation of concerns
 
 #### File: `components/ui/landing-page/hero-section.tsx`
+
 ## What we do inside this file
 
- - Build the main Hero UI
- - Use shadcn/ui components (Button, Badge)
- - Use next/link for navigation
- - Split small UI parts into reusable components
- - Render stats dynamically using data
+- Build the main Hero UI
+- Use shadcn/ui components (Button, Badge)
+- Use next/link for navigation
+- Split small UI parts into reusable components
+- Render stats dynamically using data
 
 #### Key snippets
 
@@ -397,7 +396,12 @@ export default function Home() {
 ```tsx
 const statsData = [
   { icon: RocketIcon, value: "10K+", label: "Projects Shared" },
-  { icon: UsersIcon, value: "2.5K+", label: "Active Creators", hasBorder: true },
+  {
+    icon: UsersIcon,
+    value: "2.5K+",
+    label: "Active Creators",
+    hasBorder: true,
+  },
   { icon: EyeIcon, value: "25K+", label: "Monthly Visitors" },
 ];
 ```
@@ -405,10 +409,9 @@ const statsData = [
 **Rendering using `.map()`**
 
 ```tsx
-
-{statsData.map((stat) => (
-  <StatsCard key={stat.label} {...stat} />
-))}
+{
+  statsData.map((stat) => <StatsCard key={stat.label} {...stat} />);
+}
 ```
 
 #### Navigation with Link
@@ -417,22 +420,23 @@ const statsData = [
 <Button asChild size="lg">
   <Link href="/submit">Share Your Project</Link>
 </Button>
-
 ```
 
 **Concepts used**
- - Component-based architecture
- - Data mapping
- - Client-side navigation
- - UI composition
+
+- Component-based architecture
+- Data mapping
+- Client-side navigation
+- UI composition
 
 ### File: `components/ui/landing-page/stats-card.tsx`
 
 ## What we do inside this file
- - Create a reusable Stats card component
- - Accept icons as props
- - Use optional props for styling
- - Keep styling logic isolated
+
+- Create a reusable Stats card component
+- Accept icons as props
+- Use optional props for styling
+- Keep styling logic isolated
 
 #### Key snippet
 
@@ -453,27 +457,30 @@ export default function StatsCard({
 }
 
 ```
+
 **Concepts used**
- - Passing components as props
- - Optional props
- - TypeScript for safer components
- - Reusable UI patterns
+
+- Passing components as props
+- Optional props
+- TypeScript for safer components
+- Reusable UI patterns
 
 ### What This Section Teaches
 
- - How page.tsx connects to UI components
- - How to structure files in App Router
- - How to think in components instead of pages
- - How to render UI using data
- - How to keep code readable and scalable
+- How page.tsx connects to UI components
+- How to structure files in App Router
+- How to think in components instead of pages
+- How to render UI using data
+- How to keep code readable and scalable
 
- ---
+---
 
- ## Learn by Doing: Featured & Recently Launched Products
+## Learn by Doing: Featured & Recently Launched Products
 
 After building the Hero section, the next step was to display real content on the landing page.
 
 For this, two sections were added:
+
 - **Featured Products**
 - **Recently Launched Products**
 
@@ -497,37 +504,40 @@ This helped practice component composition, data-driven UI, and reusable compone
 <RecentlyLunchedProducts />
 
 ```
-**Concepts used**
- - Page composition
- - Reusing multiple sections
- - Clean page structure
 
- ---
+**Concepts used**
+
+- Page composition
+- Reusing multiple sections
+- Clean page structure
+
+---
+
 ## file: `components/landing-page/featured-products.tsx`
 
 ### What we do inside this file
- - Display a list of featured products
- - Use a reusable section header
- - Render products using shared ProductCard
- - Add navigation to explore more products
+
+- Display a list of featured products
+- Use a reusable section header
+- Render products using shared ProductCard
+- Add navigation to explore more products
 
 ### Key snippets
 
 **Static data for UI testing**
 
 ```tsx
-const featuredProducts = [
-  { id: 1, name: "Product 1", isFeatured: true },
-];
-
+const featuredProducts = [{ id: 1, name: "Product 1", isFeatured: true }];
 ```
 
 **Rendering products**
 
 ```tsx
-{featuredProducts.map((product) => (
-  <ProductCard key={product.id} product={product} />
-))}
+{
+  featuredProducts.map((product) => (
+    <ProductCard key={product.id} product={product} />
+  ));
+}
 ```
 
 **Navigation using Link**
@@ -539,92 +549,227 @@ const featuredProducts = [
 ```
 
 **Concepts used**
- - Data-driven UI
- - Reusable components
- - Client-side navigation
- - Conditional rendering via props
 
- ## file: `components/products/product-card.tsx`
+- Data-driven UI
+- Reusable components
+- Client-side navigation
+- Conditional rendering via props
 
- ## What we do inside this file
+## file: `components/products/product-card.tsx`
+
+## What we do inside this file
+
 - Create a reusable product card
- - Navigate to dynamic product pages
- - Display tags, votes, and featured status
- - Prepare UI for future interactions (voting)
+- Navigate to dynamic product pages
+- Display tags, votes, and featured status
+- Prepare UI for future interactions (voting)
 
- ### Key snippets
+### Key snippets
 
- **Dynamic routing**
+**Dynamic routing**
 
- ```tsx
- <Link href={`/products/${product.id}`}>
+```tsx
+<Link href={`/products/${product.id}`}>
 ```
 
 **Conditional UI**
 
 ```tsx
-{product.isFeatured && <Badge>Featured</Badge>}
-
+{
+  product.isFeatured && <Badge>Featured</Badge>;
+}
 ```
 
 **Mapping tags**
 
 ```tsx
-{product.tags.map((tag) => (
-  <Badge key={tag}>{tag}</Badge>
-))}
+{
+  product.tags.map((tag) => <Badge key={tag}>{tag}</Badge>);
+}
 ```
 
 **Concepts used**
- - Reusable components
- - Props and TypeScript interfaces
- - Conditional rendering
- - Dynamic routes
+
+- Reusable components
+- Props and TypeScript interfaces
+- Conditional rendering
+- Dynamic routes
 
 ## File: `components/common/section-header.tsx`
 
 ## What we do inside this file
- - Create a reusable section header
- - Accept icons as props
- - Keep section titles consistent across pages
 
- ## Key snippet
+- Create a reusable section header
+- Accept icons as props
+- Keep section titles consistent across pages
+
+## Key snippet
 
 ```tsx
-
 <SectionHeader
   title="Featured Today"
   icon={StarIcon}
   description="Top picks from our community"
 />
 ```
+
 **Concepts used**
- - Passing components as props
- - UI consistency
- - Reusable layout components
- 
+
+- Passing components as props
+- UI consistency
+- Reusable layout components
+
 ## File: `components/common/empty-state.tsx`
+
 ## What we do inside this file
-  - Display a fallback UI when no data is available
-  - Improve user experience for empty lists
+
+- Display a fallback UI when no data is available
+- Improve user experience for empty lists
 
 ## Key snippet
 
 ```tsx
-{products.length === 0 && <EmptyState />}
-
+{
+  products.length === 0 && <EmptyState />;
+}
 ```
 
 **Concepts used**
 
- - Conditional rendering
- - UX-focused components
+- Conditional rendering
+- UX-focused components
 
 ## What This Section Teaches
- - How to compose multiple sections on one page 
- - How to reuse components across different features
- - How to render lists using .map()
- - How to handle empty states properly
- - How to prepare UI for future backend integration
- 
- ---
+
+- How to compose multiple sections on one page
+- How to reuse components across different features
+- How to render lists using .map()
+- How to handle empty states properly
+- How to prepare UI for future backend integration
+
+---
+
+## Learn by Doing: Global Header & Footer
+
+After building the landing page sections, the next step was to add a **global layout structure**.
+
+For this, a **Header** and **Footer** were introduced so they appear on **every page** of the application.
+
+This helps understand how `layout.tsx` works in the App Router and how to create shared UI.
+
+---
+
+## File: `app/layout.tsx`
+
+### What we do inside this file
+
+- Wrap the entire application with a global layout
+- Apply fonts and global styles
+- Render Header and Footer once
+- Keep page files (`page.tsx`) clean and focused
+
+### Key snippet
+
+```tsx
+<Header />;
+{
+  children;
+}
+<Footer />;
+```
+
+### Why this matters
+
+- Header and Footer are rendered once, not per page
+- Improves performance and consistency
+- Central place for global UI like navigation and branding
+
+**Concepts used**
+
+- App Router layout system
+- Global composition
+- Metadata and fonts
+- Shared UI across routes
+
+## File: `components/common/header.tsx`
+
+### What we do inside this file
+
+- Build the main site navigation
+- Add branding (Logo)
+- Add navigation links using next/link
+- Prepare UI for authentication states (signed in / signed out)
+
+### Key snippets
+
+**Client-side navigation**
+
+```tsx
+<Link href="/explore">Explore</Link>
+```
+
+**Conditional UI (Auth-ready)**
+
+```tsx
+{
+  isSignIn ? <Button>Submit Project</Button> : <Button>Sign In</Button>;
+}
+```
+
+**Reusable Logo component**
+
+```tsx
+<Link href="/" className="flex items-center gap-2">
+  <span className="font-bold">iBuildThis</span>
+</Link>
+```
+
+## Why this matters
+
+- Header is a shared component, not tied to any page
+- Conditional rendering prepares the app for real authentication later
+- Keeps navigation consistent across the app
+
+**Concepts used**
+
+- Shared components
+- Client-side routing
+- Conditional rendering
+- Component composition
+- UI state preparation
+
+## File: `components/common/footer.tsx`
+
+### What we do inside this file
+
+- Display a global footer
+- Keep layout simple and reusable
+- Separate footer logic from page content
+
+### Key snippet
+
+```tsx
+<div className="border-t">iBuiltThis Inc. All rights reserved.</div>
+```
+
+### Why this matters
+
+- Footer lives outside pages and features
+- Easy to update in one place
+- Reinforces layout-based thinking
+
+**Concepts used**
+
+- Shared layout components
+- Clean separation of concerns
+- Global UI structure
+
+## What This Section Teaches
+
+- How layout.tsx controls global UI
+- Difference between page-level and layout-level components
+- How to create reusable navigation
+- How to prepare UI for authentication
+- How to structure common components cleanly
+
+---

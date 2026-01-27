@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -18,9 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.className} antialiased`}>
-        <header>I BUILD THIS</header>
+        <Header></Header>
         {children}
-        <footer>© 2024 LEARNING next js. All rights reserved.</footer>
+        <Footer />
       </body>
     </html>
   );
